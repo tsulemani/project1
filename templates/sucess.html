@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+
+    <h1>login</h1>
+
+    <ul>
+        <li>{{username}} and {{password}}</li>
+        <a href="{{ url_for('logout')}}">
+            logout
+        </a>
+
+    </ul>
+
+
+
+{% endblock %}

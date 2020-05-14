@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+
+    <h1>Book Details</h1>
+
+    <ul>
+      <li>Title: {{session['book_title']}}</li>
+      <li>Title: {{session['reviwed']}}</li>
+        <li>Title: {{session['username']}}</li>
+
+        <li>goodreads review: {{ avrg }}</li>
+
+    </ul>
+
+    {% if session['reviewed']==145 %}
+       <h5>{{review}} and rating: {{rating}}</h5>
+       {% endif %}
+
+    {% if "reviewed" not in session %}
+    {% if "username" in session %}
+
+    <form action="{{ url_for('review')}}" method="post">
+
+
+        <input type="text" name="review" placeholder="Enter review Here">
+
+        <button type="submit" name="rating[rating]" value="5">&#9733;</button>
+        <button type="submit" name="rating[rating]" value="4">&#9733;</button>
+        <button type="submit" name="rating[rating]" value="3">&#9733;</button>
+        <button type="submit" name="rating[rating]" value="2">&#9733;</button>
+        <button type="submit" name="rating[rating]" value="1">&#9733;</button>
+
+    </form>
+
+
+    {% endif %}
+    {% endif %}
+    {% if "reviews" in session %}
+    <ul>
+      {% for review in session["reviews"] %}
+        <li>{{review}}</li>
+      {% endfor %}
+    </ul>
+
+
+    {% endif %}
+
+
+
+{% endblock %}

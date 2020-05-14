@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flights
+{% endblock %}
+
+{% block body %}
+    <h1>Books list</h1>
+
+   <ul>
+
+   {% if books|length %}
+   {% for book in books %}
+   <li>
+       <a href="{{ url_for('book', book_id=book.id) }}">
+           {{book.title}} and {{book.id}}
+       </a>
+   </li>
+   {% endfor %}
+
+
+   {% else %}
+      <h4>all books in goodreads</h4>
+    {% endif %}
+   </ul>
+
+
+
+{% endblock %}

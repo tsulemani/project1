@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block style %}
+<style media="screen">
+
+
+form {
+  width: 500PX;
+}
+
+button {
+  border: 0;
+  background: transparent;
+  font-size: 2em;
+  margin-top:20%;
+
+  padding: 0;
+  float: right;
+}
+
+button:hover,
+button:hover + button,
+button:hover + button + button,
+button:hover + button + button + button,
+button:hover + button + button + button + button {
+  color: #faa;
+}
+</style>
+{% endblock %}
+
+{% block title %}
+    rating
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+<form action="{{ url_for('ratingshow') }}" method="POST">
+  
+  <button type="submit" name="rating[rating]" value="5">&#9733;</button>
+  <button type="submit" name="rating[rating]" value="4">&#9733;</button>
+  <button type="submit" name="rating[rating]" value="3">&#9733;</button>
+  <button type="submit" name="rating[rating]" value="2">&#9733;</button>
+  <button type="submit" name="rating[rating]" value="1">&#9733;</button>
+
+</form>
+
+
+{% endblock %}

@@ -1,2 +1,3 @@
-# project1
-cs50 web project1 book
+# Project 1
+
+Web Programming with Python and JavaScript
