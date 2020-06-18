@@ -3,28 +3,47 @@
 
 
 {% extends "layout.html" %}
-
+ {% block style %}
+ <style>
+ div {
+ 
+  width: 30%;
+  
+}
+ </style>
+  {% endblock %}
 {% block title %}
     login
 {% endblock %}
 
 {% block body %}
-
+ <div >
     <h1>login</h1>
 
     {% from "_formhelpers.html" import render_field %}
-    <form method=post>
+    <form  class="form-signin" method=post>
       <dl>
 
         {{ render_field(form.username) }}
+	
+		<br>
         {{ render_field(form.password) }}
+         {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 
       </dl>
-      <p><input type=submit value=Login>
+      <p><input class="btn btn-lg btn-primary btn-block" type=submit value=Login>
     </form>
 
 
-
+</div>
 
 {% endblock %}

@@ -2,14 +2,31 @@
 
 
 {% extends "layout.html" %}
-
+{% block style %}
+ <style>
+ @media screen and (max-width: 800px){
+ .formz  {
+ 
+  width: 80%;
+  
+}
+}
+@media screen and (min-width: 800px){
+ .formz  {
+ 
+  width: 30%;
+  
+}
+}
+ </style>
+  {% endblock %}
 {% block title %}
-    login
+    Register
 {% endblock %}
 
 {% block body %}
-
-    <h1>login</h1>
+<div class="formz">
+    <h1>Register</h1>
 
     {% from "_formhelpers.html" import render_field %}
     <form method=post>
@@ -54,10 +71,10 @@
         {{ render_field(form.confirm) }}
         {{ render_field(form.accept_tos) }}
       </dl>
-      <p><input type=submit value=Register>
+      <p><input class="btn btn-lg btn-primary btn-block" type=submit value=Register>
     </form>
 
 
-
+</div>
 
 {% endblock %}

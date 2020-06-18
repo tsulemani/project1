@@ -1,5 +1,7 @@
 import os
 import requests
+
+import sqlalchemy 
 from RegistrationForm import *
 from LoginForm import *
 
@@ -8,7 +10,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__)
-app.secret_key = "hhhhhh7788@@@77@4llh55))"
+app.secret_key = "hhhhhh7788@@@77@4llh5sjdgsdstfsw"
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
@@ -17,6 +19,7 @@ db = scoped_session(sessionmaker(bind=engine))
 def search():
     text=request.form.get("searchText")
     text='%'+text+'%'
+    
     results = db.execute("SELECT * FROM books WHERE (isbn LIKE :text) OR (title LIKE  :text) OR (author LIKE :text) LIMIT 100",
             { "text": text })
 
@@ -30,9 +33,13 @@ def search():
 
 
 def index():
-
-    books = db.execute("SELECT * FROM books").fetchmany(50)
-    return render_template("index.html", books=books)
+    try:
+        books = db.execute("SELECT * FROM books").fetchmany(50)
+        return render_template("index.html", books=books)
+    except sqlalchemy.exc.OperationalError:
+        return render_template("error.html", message="Please check your internet connection")
+    
+    
 
 @app.route("/rating", methods=["GET","POST"])
 def rating():
@@ -74,7 +81,7 @@ def login():
             password=form1.password.data
 
             u=db.execute("SELECT * FROM users WHERE username = :username and psw =:password", {"username": username, "password": password}).fetchone()
-            session['username']=username
+         
             if u is None:
                 flash(u"Either username or password is worng", 'incorrect')
                 return render_template('login.html', form=form1)
