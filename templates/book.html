@@ -27,6 +27,7 @@
     <form action="{{ url_for('review')}}" method="post">
 
          <input type="hidden"  name="book_id" value={{book.id}}>
+		 <input type="hidden"  name="book_isbn" value={{book.isbn}}>
         <input type="text" name="review" placeholder="Enter review Here">
 
         <button type="submit" name="rating[rating]" value="5">&#9733;</button>

@@ -53,9 +53,10 @@ def review():
         review = request.form.get("review")
         rating=request.form.get("rating[rating]")
         book_id1=request.form.get("book_id")
+        book_isbn=request.form.get("book_isbn")
 
         db.execute("INSERT INTO reviews (review_isbn, review_username, review, rating) VALUES (:review_isbn, :review_username, :review, :rating)",
-                    {"review_isbn":session["book_isbn"], "review_username":session["username"],"review" :review,"rating" :rating})
+                    {"review_isbn":book_isbn, "review_username":session["username"],"review" :review,"rating" :rating})
         db.commit()
         session['reviewed']=145
 
@@ -150,20 +151,30 @@ def book(book_id):
     session.pop('reviewed', None)
     session.pop('reviewes', None)
     book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
-
     if book is None:
         return render_template("error.html", message="No such book.")
     else:
-        session['book_title']=book.title
-        session['book_isbn']=book.isbn
+       
         reviews = db.execute("SELECT * FROM reviews WHERE review_isbn = :isbn", {"isbn": book.isbn}).fetchall()
-
+        
+        r=0
         if reviews is not None:
             session['reviews']=[]
             for review in reviews:
+                r=1
                 re=review.review
                 session['reviews'].append(re)
-
+        if r==1:
+            av_rating=0
+            n=0
+            for rating in reviews:
+                n=n+1
+                av_rating=av_rating + rating.rating
+            av_rating=(av_rating/n)
+            
+            db.execute("UPDATE books SET av_rating = :av_rating WHERE id= :id", {"av_rating" :av_rating, "id": book_id})
+            db.commit()
+            book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
 
 
 
@@ -180,5 +191,6 @@ def book(book_id):
         data=res.json()
         avrg=data["books"][0]["average_rating"] 
     
+    
 
-    return render_template("book.html", avrg=avrg, book=book    )
+    return render_template("book.html", avrg=avrg, book=book)
