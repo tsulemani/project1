@@ -5,7 +5,7 @@ import sqlalchemy
 from RegistrationForm import *
 from LoginForm import *
 
-from flask import Flask, render_template, request, session, flash, jsonify
+from flask import Flask, render_template, request, session, flash, jsonify, url_for, redirect
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -46,12 +46,13 @@ def rating():
 
     return render_template("rating.html",)
 
-@app.route("/yourreview", methods=["GET","POST"])
+@app.route("/yourreview", methods=["POST"])
 def review():
-    avrg=0
+    
     if request.method == "POST":
         review = request.form.get("review")
         rating=request.form.get("rating[rating]")
+        book_id1=request.form.get("book_id")
 
         db.execute("INSERT INTO reviews (review_isbn, review_username, review, rating) VALUES (:review_isbn, :review_username, :review, :rating)",
                     {"review_isbn":session["book_isbn"], "review_username":session["username"],"review" :review,"rating" :rating})
@@ -59,11 +60,9 @@ def review():
         session['reviewed']=145
 
 
-        return render_template("book.html", avrg=avrg, review=review, rating=rating)
+        return redirect(url_for("book", book_id=book_id1))
 
 
-
-    return render_template("book.html", avrg=avrg)
 
 @app.route("/logout", methods=["GET","POST"])
 def logout():
@@ -174,12 +173,12 @@ def book(book_id):
             session['reviewed']=1
 
 
-    """res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "Ve44OwUOVU2PJIzwb8NYCQ", "isbns": book.isbn})
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "Ve44OwUOVU2PJIzwb8NYCQ", "isbns": book.isbn})
     if res.status_code == 404:
         avrg="No goodreads review available"
     else:
         data=res.json()
-        avrg=data["books"][0]["average_rating"] """
-    avrg=0
+        avrg=data["books"][0]["average_rating"] 
+    
 
-    return render_template("book.html", avrg=reviews    )
+    return render_template("book.html", avrg=avrg, book=book    )

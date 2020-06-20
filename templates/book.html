@@ -9,11 +9,11 @@
     <h1>Book Details</h1>
 
     <ul>
-      <li>Title: {{session['book_title']}}</li>
-      <li>Title: {{session['reviwed']}}</li>
-        <li>Title: {{session['username']}}</li>
-
-        <li>goodreads review: {{ avrg }}</li>
+      <li>Title: {{book.title}}</li>
+      <li>Author: {{book.author}}</li>
+        <li>Year of publication: {{book.year}}</li>
+		<li>Rating: {{book.av_rating}}</li>
+        <li>goodreads rating: {{ avrg }}</li>
 
     </ul>
 
@@ -26,7 +26,7 @@
 
     <form action="{{ url_for('review')}}" method="post">
 
-
+         <input type="hidden"  name="book_id" value={{book.id}}>
         <input type="text" name="review" placeholder="Enter review Here">
 
         <button type="submit" name="rating[rating]" value="5">&#9733;</button>
