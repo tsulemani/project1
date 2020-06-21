@@ -11,11 +11,15 @@
 
    {% if books|length %}
    {% for book in books %}
-   <li>
+    <br>
+   <i class="fa fa-book" style="font-size: 25px">
+  
        <a href="{{ url_for('book', book_id=book.id) }}">
            {{book.title}} ({{book.av_rating}})
        </a>
-   </li>
+   </i>
+   
+   <br>
    {% endfor %}
 
 

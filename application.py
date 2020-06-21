@@ -34,7 +34,7 @@ def search():
 
 def index():
     try:
-        books = db.execute("SELECT * FROM books").fetchmany(50)
+        books = db.execute("SELECT * FROM books ORDER BY av_rating DESC").fetchmany(50)
         return render_template("index.html", books=books)
     except sqlalchemy.exc.OperationalError:
         return render_template("error.html", message="Please check your internet connection")

@@ -6,10 +6,10 @@
 
 {% block body %}
 
-    <h1>Book Details</h1>
+    <h1>{{book.title}}</h1>
 
     <ul>
-      <li>Title: {{book.title}}</li>
+    
       <li>Author: {{book.author}}</li>
         <li>Year of publication: {{book.year}}</li>
 		<li>Rating: {{book.av_rating}}</li>
@@ -42,9 +42,11 @@
     {% endif %}
     {% endif %}
     {% if "reviews" in session %}
+	<h5> Reviews </h5>
     <ul>
       {% for review in session["reviews"] %}
-        <li>{{review}}</li>
+        <li class="fa fa-pencil" aria-hidden="true">&nbsp{{review}}</li>
+		<br>
       {% endfor %}
     </ul>
 
