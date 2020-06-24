@@ -7,19 +7,20 @@
 {% block body %}
     <h1>Top Books</h1>
 
-   <ul>
+   <ul class="list-group">
 
    {% if books|length %}
    {% for book in books %}
-    <br>
-   <i class="fa fa-book" style="font-size: 25px">
+
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-left" style="font-size: 18px">
+      <i class="fa fa-book" style="font-size: 25px">
+      <a href="{{ url_for('book', book_id=book.id) }}">
+           {{book.title}} 
+       </a> </i>
   
-       <a href="{{ url_for('book', book_id=book.id) }}">
-           {{book.title}} ({{book.av_rating}})
-       </a>
-   </i>
-   
-   <br>
+   &nbsp;
+   <span class="badge badge-primary badge-pill">  {{book.av_rating}}</span>
+   </li>
    {% endfor %}
 
 

@@ -3,6 +3,20 @@
 {% block title %}
     Book
 {% endblock %}
+ {% block style %}
+ <style media="screen">
+       
+		  
+      
+    .fa {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+  </style>
+        {% endblock %}
 
 {% block body %}
 
@@ -44,8 +58,10 @@
     {% if "reviews" in session %}
 	<h5> Reviews </h5>
     <ul>
-      {% for review in session["reviews"] %}
-        <li class="fa fa-pencil" aria-hidden="true">&nbsp{{review}}</li>
+      {% for review in reviews %}
+	  
+       {{review.review_username}} 
+	   <i class="fa fa-pencil" aria-hidden="true"></i> {{review.review}} ({{review.rating}})
 		<br>
       {% endfor %}
     </ul>

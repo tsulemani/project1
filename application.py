@@ -155,19 +155,19 @@ def book(book_id):
         return render_template("error.html", message="No such book.")
     else:
        
-        reviews = db.execute("SELECT * FROM reviews WHERE review_isbn = :isbn", {"isbn": book.isbn}).fetchall()
+        reviews1 = db.execute("SELECT * FROM reviews WHERE review_isbn = :isbn", {"isbn": book.isbn}).fetchall()
         
         r=0
-        if reviews is not None:
+        if reviews1 is not None:
             session['reviews']=[]
-            for review in reviews:
+            for review in reviews1:
                 r=1
                 re=review.review
                 session['reviews'].append(re)
         if r==1:
             av_rating=0
             n=0
-            for rating in reviews:
+            for rating in reviews1:
                 n=n+1
                 av_rating=av_rating + rating.rating
             av_rating=(av_rating/n)
@@ -193,4 +193,4 @@ def book(book_id):
     
     
 
-    return render_template("book.html", avrg=avrg, book=book)
+    return render_template("book.html", avrg=avrg, book=book, reviews= reviews1)
